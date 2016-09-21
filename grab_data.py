@@ -11,7 +11,7 @@ def get_pageviews(year, month, day):
 def write_file(url):
     req = requests.get(url, stream=True)
     local_filename = url.split("/")[-1]
-    with open('data/' + local_filename, 'wb') as f:
+    with open('pageviews-gz/' + local_filename, 'wb') as f:
         for chunk in req.iter_content(chunk_size=1024):
             if chunk:
                 f.write(chunk)
