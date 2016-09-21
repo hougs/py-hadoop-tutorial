@@ -1,0 +1,6 @@
+jupyter
+pandas
+bs4
+requests
+ibis-framework
+
