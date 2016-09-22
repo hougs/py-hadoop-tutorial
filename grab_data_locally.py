@@ -1,3 +1,4 @@
+from argparse import ArgumentParser
 import requests
 from bs4 import BeautifulSoup
 
@@ -21,4 +22,19 @@ def main(year, month, day):
     [write_file(url) for url in get_pageviews(year, month, day)]
 
 if __name__ == "__main__":
-    main('2016', '01', '01')
+    arg_parser = ArgumentParser()
+    # Default to January 1st, 2016
+    arg_parser.add_argument("--year",
+                            default='2016',
+                            choices=['2016', '2015'],
+                            action='store')
+    arg_parser.add_argument("--month",
+                            default='01',
+                            choices=[str(n).zfill(2) for n in range(1, 12)],
+                            action='store')
+    arg_parser.add_argument("--day",
+                            default='01',
+                            choices=[str(n).zfill(2) for n in range(1, 31)],
+                            action='store')
+    args = arg_parser.parse_args()
+    main(args.year, args.month, args.day)
