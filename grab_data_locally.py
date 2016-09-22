@@ -30,11 +30,11 @@ if __name__ == "__main__":
                             action='store')
     arg_parser.add_argument("--month",
                             default='01',
-                            choices=[str(n).zfill(2) for n in range(1, 12)],
+                            choices=[str(n).zfill(2) for n in range(1, 13)],
                             action='store')
     arg_parser.add_argument("--day",
                             default='01',
-                            choices=[str(n).zfill(2) for n in range(1, 31)],
+                            choices=[str(n).zfill(2) for n in range(1, 32)],
                             action='store')
     args = arg_parser.parse_args()
     main(args.year, args.month, args.day)
