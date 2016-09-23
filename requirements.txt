@@ -3,4 +3,5 @@ pandas
 bs4
 requests
 ibis-framework
+matplotlib
 
