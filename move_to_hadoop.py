@@ -9,8 +9,8 @@ ibis.options.sql.default_limit = None
 
 FILE_SCHEMA = ibis.schema([('project_name', 'string'),
                            ('page_name', 'string'),
-                           ('monthly_total', 'int64'),
-                           ('hourly_total', 'int64')])
+                           ('n_views', 'int64'),
+                           ('n_bytes', 'int64')])
 
 # System independent way to join paths
 LOCAL_DATA_PATH = os.path.join(os.getcwd(), "pageviews-gz")
@@ -61,14 +61,14 @@ def safe_get_db(ibis_conn, db_name):
 
 
 def main(hdfs_conn, ibis_conn, hdfs_dir, db_name):
-    hdfs_gz_dirs = [mv_files(filename, hdfs_dir, hdfs_conn) for filename in
-                    LOCAL_FILES]
+    #hdfs_gz_dirs = [mv_files(filename, hdfs_dir, hdfs_conn) for filename in
+    #                LOCAL_FILES]
+    hdfs_gz_dirs = [hdfs_dir + dir for dir in hdfs_conn.ls(hdfs_dir)]
     [gz_2_data_insert(data_dir, ibis_conn, db_name) for data_dir in hdfs_gz_dirs]
 
 
 if __name__ == "__main__":
     arg_parser = ArgumentParser()
-    # Default to January 1st, 2016
     arg_parser.add_argument("--db_name",
                             default='u_juliet')
     arg_parser.add_argument("--hdfs_dir",
