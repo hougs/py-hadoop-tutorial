@@ -47,7 +47,7 @@ def gz_2_data_insert(data_dir, ibis_conn, db_name):
 
     working_db = safe_get_db(ibis_conn, db_name)
     if 'wiki_pageviews' in working_db.tables:
-        ibis_conn.insert('wiki_pageviews', tmp_w_time, database=DB_NAME)
+        ibis_conn.insert('wiki_pageviews', tmp_w_time, database=db_name)
     else:
         ibis_conn.create_table('wiki_pageviews', obj=tmp_w_time,
                                database=db_name)
@@ -72,7 +72,7 @@ if __name__ == "__main__":
     arg_parser.add_argument("--db_name",
                             default='u_juliet')
     arg_parser.add_argument("--hdfs_dir",
-                            default='/user/juliet/pageviews-gz')
+                            default='/user/juliet/pageviews-gz/')
     arg_parser.add_argument("--nn_host",
                             default='bottou03.sjc.cloudera.com')
     arg_parser.add_argument("--impala_host",
