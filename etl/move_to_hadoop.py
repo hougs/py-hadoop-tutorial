@@ -53,16 +53,14 @@ def gz_2_data_insert(data_dir, ibis_conn, db_name):
                                database=db_name)
 
 def safe_get_db(ibis_conn, db_name):
-    if ibis_conn.exists_database(db_name):
-        user_db = ibis_conn.database(db_name)
-    else:
-        user_db = ibis_conn.create_database(db_name)
-    return user_db
+    if not ibis_conn.exists_database(db_name):
+         ibis_conn.create_database(db_name)
+    return ibis_conn.database(db_name)
 
 
 def main(hdfs_conn, ibis_conn, hdfs_dir, db_name):
-    #hdfs_gz_dirs = [mv_files(filename, hdfs_dir, hdfs_conn) for filename in
-    #                LOCAL_FILES]
+    hdfs_gz_dirs = [mv_files(filename, hdfs_dir, hdfs_conn) for filename in
+                    LOCAL_FILES]
     hdfs_gz_dirs = [hdfs_dir + dir for dir in hdfs_conn.ls(hdfs_dir)]
     [gz_2_data_insert(data_dir, ibis_conn, db_name) for data_dir in hdfs_gz_dirs]
 
@@ -70,13 +68,13 @@ def main(hdfs_conn, ibis_conn, hdfs_dir, db_name):
 if __name__ == "__main__":
     arg_parser = ArgumentParser()
     arg_parser.add_argument("--db_name",
-                            default='u_juliet')
+                            default='u_srowen')
     arg_parser.add_argument("--hdfs_dir",
-                            default='/user/juliet/pageviews-gz/')
+                            default='/user/srowen/pageviews-gz/')
     arg_parser.add_argument("--nn_host",
-                            default='bottou03.sjc.cloudera.com')
+                            default='cdh2.c.guerilla-python.internal')
     arg_parser.add_argument("--impala_host",
-                            default='bottou01.sjc.cloudera.com')
+                            default='cdh1.c.guerilla-python.internal')
     args = arg_parser.parse_args()
 
     hdfs_conn = ibis.hdfs_connect(host=args.nn_host)
