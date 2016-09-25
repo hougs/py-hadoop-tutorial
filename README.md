@@ -7,7 +7,7 @@ Hadoop, particularly files in HDFS and Impala Table.
 
 You will need access to a Hadoop cluster (or a VM/Docker image), a python
 interpreter with the packages listed in requirements.txt installed, and Spark
-2.0 [installed as described in the 'Linking with Spark' section of the docs
+1.6.1 [installed as described in the 'Linking with Spark' section of the docs
 .](http://spark.apache.org/docs/latest/programming-guide.html)
 
 ## Data
