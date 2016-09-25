@@ -61,7 +61,6 @@ def safe_get_db(ibis_conn, db_name):
 def main(hdfs_conn, ibis_conn, hdfs_dir, db_name):
     hdfs_gz_dirs = [mv_files(filename, hdfs_dir, hdfs_conn) for filename in
                     LOCAL_FILES]
-    hdfs_gz_dirs = [hdfs_dir + dir for dir in hdfs_conn.ls(hdfs_dir)]
     [gz_2_data_insert(data_dir, ibis_conn, db_name) for data_dir in hdfs_gz_dirs]
 
 
