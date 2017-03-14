@@ -1,7 +1,5 @@
 # # Now again, but with PySpark
-# 
-
-
+#
 from pyspark.sql import SparkSession
 
 # Enabling Hive support allows us to easily interact with the Hive Metastore
@@ -42,18 +40,12 @@ top_10_pg_views_hourly.show(10)
 null_pg_views = en_pageviews.filter("n_views IS NULL")
 null_pg_views.show()
 
-
-
 nn_pg_views = en_pageviews.filter("n_views IS NOT NULL")
 nn_pg_views.orderBy("n_views", ascending=False).show(10)
-
-
 
 champagne_df = nn_pg_views.filter("LOWER(page_name) = 'champagne'")
 champagne_df.orderBy("day", "hour").show(10)
 
-
-# In[ ]:
 
 w_daily_views = nn_pg_views.groupBy("page_name", "month",
 "day").sum("n_views").withColumnRenamed("sum(n_views)",
@@ -61,14 +53,7 @@ w_daily_views = nn_pg_views.groupBy("page_name", "month",
 w_daily_views.show(10)
 
 
-# In[ ]:
-
 tot_view = nn_pg_views.groupBy("page_name").sum("n_views").withColumnRenamed("sum(n_views)",
 "all_views").orderBy("all_views", ascending=False)
 tot_view.show(30)
-
-
-# In[ ]:
-
-
 

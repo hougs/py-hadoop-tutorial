@@ -16,11 +16,13 @@ We will use hourly Wikipedia page view statistics that have been corrected:
 on the data source can be found on the [wikitech wiki page for the dataset.]
 (https://wikitech.wikimedia.org/wiki/Analytics/Data/Pageviews)
 
-To download the data, run 
+To download the data locally, run
 
     mkdir pageviews-gz
     python grab_data.py
 
 from the root of this directory.
+
+To then create the required tables,
 
 
