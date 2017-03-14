@@ -67,13 +67,13 @@ def main(hdfs_conn, ibis_conn, hdfs_dir, db_name):
 if __name__ == "__main__":
     arg_parser = ArgumentParser()
     arg_parser.add_argument("--db_name",
-                            default='u_srowen')
+                            default='u_juliet')
     arg_parser.add_argument("--hdfs_dir",
-                            default='/user/srowen/pageviews-gz/')
+                            default='/user/juliet/pageviews-gz/')
     arg_parser.add_argument("--nn_host",
-                            default='cdh2.c.guerilla-python.internal')
+                            default='')
     arg_parser.add_argument("--impala_host",
-                            default='cdh1.c.guerilla-python.internal')
+                            default='')
     args = arg_parser.parse_args()
 
     hdfs_conn = ibis.hdfs_connect(host=args.nn_host)

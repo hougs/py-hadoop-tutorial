@@ -9,8 +9,6 @@
 
 # In[ ]:
 
-get_ipython().magic(u'matplotlib inline')
-
 import ibis
 import pandas as pd
 
@@ -24,20 +22,14 @@ import pandas as pd
 # ibis.options.sql.default_limit = 10
 # ibis.options.interactive = True TODO double check this is correct
 
-# In[ ]:
-
 ibis.options.sql.default_limit = None
 
-hdfs_conn = ibis.hdfs_connect(host='cdh1.c.guerilla-python.internal')
-# There is an impala deamon on eachmachine. You likely want change
-# the host name to match the machine you are working on.
-ibis_conn = ibis.impala.connect(host='cdh3.c.guerilla-python.internal',
+hdfs_conn = ibis.hdfs_connect(host='')
+ibis_conn = ibis.impala.connect(host='',
                                     hdfs_client=hdfs_conn)
 
 
-# In[ ]:
-
-pageviews_tbl = ibis_conn.table('wiki_pageviews', database='u_srowen')
+pageviews_tbl = ibis_conn.table('wiki_pageviews', database='u_juliet')
 
 
 # What is in a project name? What does this data look like?
@@ -63,7 +55,6 @@ project_names
 # 
 # Maybe we can understand this by finding the projects with the most pages. Let's group by porject name and then count the size of the groups.
 
-# In[ ]:
 
 project_page_counts = pageviews_tbl.group_by(pageviews_tbl.project_name)                                   .size()                                   .sort_by(('count', False))
 project_page_counts = ibis_conn.execute(project_page_counts)

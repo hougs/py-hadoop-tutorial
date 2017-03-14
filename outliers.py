@@ -1,25 +1,25 @@
 
-# coding: utf-8
-
-# In[ ]:
-
 import numpy as np
 import pandas as pd
-from pyspark.sql import HiveContext
+from pyspark.sql import SparkSession
 
+# Enabling Hive support allows us to easily interact with the Hive Metastore
+spark = SparkSession.builder \
+            .master("yarn") \
+            .appName("Exploring Outlier Pageviews With PySpark") \
+            .config("spark.driver.memory", "2g") \
+            .config("spark.executor.memory", "8g") \
+            .config("spark.executor.cores", "3") \
+            .config("spark.executors.instances", "1") \
+            .enableHiveSupport() \
+            .getOrCreate()
 
-# We want to be able to connect the the Hive Metastore and use the information in there about file paths and schemas from Spark. To do this, we need to create a HiveContext (Note: How this is done changes in Spark 2.0, the most recent version of Spark.)
-
-# In[ ]:
-
-sqlContext = HiveContext(sc)
+spark.sparkContext.setLogLevel("OFF")
 
 
 # You all are only working with a single executor, so processing is going to go slowly. I've created a sample of the whole data set. I would recommend working with samples of the whole dataset in order to have work you launch complete in a reasonable amount of time.
 
-# In[ ]:
-
-hourly_pageviews_tbl = sqlContext.sql("SELECT * FROM u_srowen.sm_sample").cache()
+hourly_pageviews_tbl = spark.sql("SELECT * FROM u_juliet.sm_sample").cache()
 
 
 # We are going to transform our data into an RDD of tuples where the first value is the page name and the second values is a pd.Series.
